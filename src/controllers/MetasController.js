@@ -6,8 +6,15 @@ class MetasController {
   async createMeta(req, res) {
     try {
       const userId = req.userId;
-      const { nome, dataConclusao } = req.body;
-      const meta = await service.createMeta({ userId, nome, dataConclusao });
+      const { nome, dataConclusao, descMeta, objetivo } = req.body;
+      const dataFormatada = new Date(dataConclusao);
+      const meta = await service.createMeta({
+        userId,
+        nome,
+        dataConclusao: dataFormatada,
+        descMeta,
+        objetivo: Number(objetivo),
+      });
       return res.status(201).json(meta);
     } catch (error) {
       return res.status(400).json({ error: error.message });

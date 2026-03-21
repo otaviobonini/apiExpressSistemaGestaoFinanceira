@@ -24,11 +24,11 @@ model Transacoes {
   tipo TipoTransacao
   userId Int
   createdAt    DateTime     @default(now())
-  categoriaId Int
+  categoriaId Int?
   descricao String?
 
 
-  categoria Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+  categoria Categoria? @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id],onDelete: Cascade)
   
 }
@@ -61,6 +61,8 @@ model Metas {
   dataConclusao DateTime
   valorGuardado Int
   userId Int 
+  objetivo Int
+  descMeta String
   
   user User @relation(fields: [userId], references: [id],onDelete: Cascade)
 

@@ -1,19 +1,24 @@
 import { prisma } from "../database/prisma.js";
 
 export default class TransacoesService {
-  async createTransaction({ userId, valor, tipo, categoriaId, descricao }) {
-    if (!userId || valor === null || !tipo || !categoriaId) {
+  async createTransaction({ userId, valor, tipo, categoriaNome, descricao }) {
+    if (!userId || valor === null || !tipo) {
       throw new Error("missing data");
     }
-    const categoria = await prisma.categoria.findFirst({
-      where: {
-        id: categoriaId,
-        userId,
-      },
-    });
+    let categoriaId = null;
 
-    if (!categoria) {
-      throw new Error("Category not found");
+    if (categoriaNome) {
+      const categoria = await prisma.categoria.findFirst({
+        where: {
+          nome: categoriaNome,
+          userId,
+        },
+      });
+      if (!categoria) {
+        throw new Error("Category not found");
+      }
+
+      categoriaId = categoria.id;
     }
 
     const newTransaction = await prisma.transacoes.create({
@@ -21,8 +26,11 @@ export default class TransacoesService {
         userId,
         valor: Number(valor),
         tipo,
-        categoriaId: categoria.id,
+        categoriaId,
         descricao,
+      },
+      include: {
+        categoria: true,
       },
     });
 
@@ -34,6 +42,7 @@ export default class TransacoesService {
     }
     const transactions = await prisma.transacoes.findMany({
       where: { userId },
+      include: { categoria: true },
     });
     return transactions;
   }

@@ -41,6 +41,13 @@ export default class AuthService {
     const token = jwt.sign({ id: usedEmail.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    return { usedEmail, token };
+    return {
+      user: {
+        id: usedEmail.id,
+        email: usedEmail.email,
+        name: usedEmail.name,
+      },
+      token,
+    };
   }
 }
