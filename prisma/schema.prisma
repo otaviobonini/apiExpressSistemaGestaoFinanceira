@@ -20,7 +20,7 @@ enum TipoTransacao{
 
 model Transacoes {
   id Int @id @default(autoincrement())
-  valor Int
+  valor Decimal @db.Decimal(10, 2)
   tipo TipoTransacao
   userId Int
   createdAt    DateTime     @default(now())
@@ -48,7 +48,7 @@ model User {
 model Categoria {
   id Int @id @default(autoincrement())
   nome String
-  orcamento Int 
+  orcamento Decimal @db.Decimal(10, 2)
   userId Int
 
   user User @relation(fields: [userId], references: [id],onDelete: Cascade)
@@ -59,9 +59,9 @@ model Metas {
   id Int @id @default(autoincrement())
   nome String
   dataConclusao DateTime
-  valorGuardado Int
+  valorGuardado Decimal @db.Decimal(10, 2)
   userId Int 
-  objetivo Int
+  objetivo Decimal @db.Decimal(10, 2)
   descMeta String
   
   user User @relation(fields: [userId], references: [id],onDelete: Cascade)
