@@ -48,7 +48,7 @@ export default class MetasService {
     }
     const updatedMeta = await prisma.metas.update({
       where: { id: Number(id) },
-      data: { valorGuardado: meta.valorGuardado + Number(valor) },
+      data: { valorGuardado: Number(meta.valorGuardado) + Number(valor) },
     });
     return updatedMeta;
   }
