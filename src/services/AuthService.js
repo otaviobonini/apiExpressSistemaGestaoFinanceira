@@ -9,7 +9,7 @@ export default class AuthService {
       throw new Error("Email already in use");
     }
     if (!email || !password || !name) {
-      throw new Error("missing data");
+      throw new Error("Missing data");
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -25,18 +25,18 @@ export default class AuthService {
 
   async executeLogin({ email, password }) {
     if (!email || !password) {
-      throw new Error("missing data");
+      throw new Error("Missing data");
     }
     const usedEmail = await prisma.user.findUnique({ where: { email } });
     if (!usedEmail) {
-      throw new Error("email not found");
+      throw new Error("Email not found");
     }
     const passwordMatch = await bcrypt.compare(
       password,
       usedEmail.passwordHash,
     );
     if (!passwordMatch) {
-      throw new Error("Invalida password");
+      throw new Error("Invalid password");
     }
     const token = jwt.sign({ id: usedEmail.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
