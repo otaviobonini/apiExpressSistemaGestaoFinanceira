@@ -5,7 +5,8 @@ const metasRoutes = Router();
 
 metasRoutes.post("/", MetasController.createMeta);
 metasRoutes.delete("/:id", MetasController.deleteMeta);
-metasRoutes.patch("/:id", MetasController.addValueMeta);
+metasRoutes.patch("/add-value/:id", MetasController.addValueMeta);
+metasRoutes.patch("/remove-value/:id", MetasController.removeValueMeta);
 metasRoutes.get("/", MetasController.listMetas);
 
 export default metasRoutes;

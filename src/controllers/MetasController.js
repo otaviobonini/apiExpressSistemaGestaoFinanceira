@@ -45,6 +45,21 @@ class MetasController {
       return res.status(400).json({ error: error.message });
     }
   }
+  async removeValueMeta(req, res) {
+    try {
+      const userId = req.userId;
+      const { id } = req.params;
+      const { valor } = req.body;
+      const meta = await service.removerValorMeta({
+        userId,
+        valor,
+        id,
+      });
+      return res.status(200).json(meta);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
   async listMetas(req, res) {
     try {
       const userId = req.userId;

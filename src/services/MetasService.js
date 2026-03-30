@@ -36,6 +36,23 @@ export default class MetasService {
     const deleted = await prisma.metas.delete({ where: { id: Number(id) } });
     return deleted;
   }
+  async removerValorMeta({ userId, id, valor }) {
+    if (!userId || !id) {
+      throw new Error("missing data");
+    }
+    const meta = await prisma.metas.findFirst({
+      where: { userId, id: Number(id) },
+    });
+    if (!meta) {
+      throw new Error("meta not found");
+    }
+    const updatedMeta = await prisma.metas.update({
+      where: { id: Number(id) },
+      data: { valorGuardado: Number(meta.valorGuardado) - Number(valor) },
+    });
+    return updatedMeta;
+  }
+
   async adicionarValorMeta({ userId, id, valor }) {
     if (!userId || !id) {
       throw new Error("missing data");
