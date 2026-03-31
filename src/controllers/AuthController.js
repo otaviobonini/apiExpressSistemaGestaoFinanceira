@@ -1,9 +1,10 @@
 import AuthService from "../services/AuthService.js";
 
+const service = new AuthService();
+
 class AuthController {
   async register(req, res) {
     try {
-      const service = new AuthService();
       const user = await service.executeRegister(req.body);
       return res.status(201).json(user);
     } catch (error) {
@@ -12,7 +13,6 @@ class AuthController {
   }
   async login(req, res) {
     try {
-      const service = new AuthService();
       const data = await service.executeLogin(req.body);
       return res.json(data);
     } catch (error) {

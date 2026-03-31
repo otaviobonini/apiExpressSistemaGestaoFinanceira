@@ -2,10 +2,6 @@ import { prisma } from "../database/prisma.js";
 
 export default class CategoriasService {
   async createCategory({ userId, nome, orcamento }) {
-    if (!userId || !nome || !orcamento) {
-      throw new Error("missing data");
-    }
-
     const existing = await prisma.categoria.findFirst({
       where: {
         nome,
@@ -29,10 +25,6 @@ export default class CategoriasService {
   }
 
   async deleteCategory({ userId, categoryId }) {
-    if (!userId || !categoryId) {
-      throw new Error("missing data");
-    }
-
     const deletedCategory = await prisma.categoria.findFirst({
       where: {
         id: categoryId,
@@ -52,10 +44,6 @@ export default class CategoriasService {
   }
 
   async getCategories({ userId }) {
-    if (!userId) {
-      throw new Error("missing data");
-    }
-
     const categories = await prisma.categoria.findMany({
       where: { userId },
     });

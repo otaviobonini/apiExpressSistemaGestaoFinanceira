@@ -2,9 +2,6 @@ import { prisma } from "../database/prisma.js";
 
 export default class TransacoesService {
   async createTransaction({ userId, valor, tipo, categoriaNome, descricao }) {
-    if (!userId || valor === null || !tipo) {
-      throw new Error("missing data");
-    }
     let categoriaId = null;
 
     if (categoriaNome) {
@@ -37,9 +34,6 @@ export default class TransacoesService {
     return newTransaction;
   }
   async listTransactions({ userId }) {
-    if (!userId) {
-      throw new Error("missing data");
-    }
     const transactions = await prisma.transacoes.findMany({
       where: { userId },
       include: { categoria: true },
@@ -47,9 +41,6 @@ export default class TransacoesService {
     return transactions;
   }
   async deleteTransaction({ userId, transactionId }) {
-    if (!userId || !transactionId) {
-      throw new Error("missing data");
-    }
     const transaction = await prisma.transacoes.findFirst({
       where: { userId, id: transactionId },
     });

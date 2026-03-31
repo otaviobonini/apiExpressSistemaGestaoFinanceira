@@ -2,14 +2,6 @@ import { prisma } from "../database/prisma.js";
 
 export default class MetasService {
   async createMeta({ userId, nome, dataConclusao, descMeta, objetivo }) {
-    if (!userId) throw new Error("userId is required");
-    if (!nome) throw new Error("nome is required");
-    if (!dataConclusao) throw new Error("dataConclusao is required");
-    if (!descMeta) throw new Error("descMeta is required");
-    if (!objetivo) throw new Error("objetivo is required");
-    if (!userId || !nome || !dataConclusao || !descMeta || !objetivo) {
-      throw new Error("missing data");
-    }
     const newMeta = await prisma.metas.create({
       data: {
         userId,
@@ -23,10 +15,6 @@ export default class MetasService {
     return newMeta;
   }
   async deleteMeta({ userId, id }) {
-    if (!userId || !id) {
-      throw new Error("missing data");
-    }
-
     const meta = await prisma.metas.findFirst({
       where: { userId, id: Number(id) },
     });
@@ -37,9 +25,6 @@ export default class MetasService {
     return deleted;
   }
   async removerValorMeta({ userId, id, valor }) {
-    if (!userId || !id) {
-      throw new Error("missing data");
-    }
     const meta = await prisma.metas.findFirst({
       where: { userId, id: Number(id) },
     });
@@ -54,9 +39,6 @@ export default class MetasService {
   }
 
   async adicionarValorMeta({ userId, id, valor }) {
-    if (!userId || !id) {
-      throw new Error("missing data");
-    }
     const meta = await prisma.metas.findFirst({
       where: { userId, id: Number(id) },
     });
@@ -70,10 +52,6 @@ export default class MetasService {
     return updatedMeta;
   }
   async getMetas({ userId }) {
-    if (!userId) {
-      throw new Error("missing data");
-    }
-
     const metas = await prisma.metas.findMany({
       where: { userId },
     });
