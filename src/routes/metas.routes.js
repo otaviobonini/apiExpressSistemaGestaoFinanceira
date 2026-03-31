@@ -10,6 +10,8 @@ import {
 } from "../schemas/metas.schema.js";
 const metasRoutes = Router();
 
+metasRoutes.get("/", MetasController.listMetas);
+
 metasRoutes.post("/", validate(createMetasSchema), MetasController.createMeta);
 
 metasRoutes.delete(
