@@ -26,8 +26,7 @@ Esta API foi desenvolvida com foco em boas práticas de arquitetura backend, inc
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/finance-api.git
-cd finance-api
+git clone https://github.com/otaviobonini/apiExpressSistemaGestaoFinanceira.git
 ```
 
 ### 2. Instale as dependências
